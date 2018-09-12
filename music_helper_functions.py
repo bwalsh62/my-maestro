@@ -30,7 +30,38 @@ def note_to_f(note):
     else:
         return mus_dict.get(note.capitalize())
     
+
+def note_from_freq(freq):
     
+    mus_dict = {
+        'A3': 220.00,
+        'B3': 246.94,
+        'C4': 261.63,
+        'D4': 293.66,
+        'E4': 329.63,
+        'F4': 349.23,
+        'G4': 392.00,
+        'A4': 440.00,
+        'B4': 493.88,
+        'C5': 523.25,
+        'D5': 587.33,
+        'E5': 659.25,
+        'F5': 698.46,
+        'G5': 783.99
+    }
+    
+    # Should eventually have common dictionary shared with note_to_f
+    
+    freq_vals = list(mus_dict.values())
+    
+    # Find closest note
+    # To find closest perceived note, take log
+    log_dif_freqs = np.abs(np.log(freq_vals) - np.log(freq))
+    
+    note = [key for (key, value) in mus_dict.items() if value == freq_vals[log_dif_freqs.argmin()]]
+    
+    return note[0]
+
 #%% Function for returning fundamental frequency from waveform
     
 def fundFreq(waveform,fs):
